@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+
+[project]
+name = "template"
+version = "0.1.0"
+description = "A template Python package"
+requires-python = ">=3.12"
+license = "AGPL-3.0-only"
+license-files = ["LICENSE"]
+authors = [
+  { name = "Author", email = "author@example.org" },
+]
+
+dependencies = [
+]
+
+# [project.scripts]
+# template = "template.__main__:main"
+
+[tool.setuptools]
+packages = { find = { include = ["template*"] } }
+include-package-data = true
+
+[tool.setuptools.package-data]
+"template" = ["assets/**/*"]
