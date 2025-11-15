@@ -1,7 +1,10 @@
 import sys
 import logging
+import pygame
 
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
+
+from template.app import App
 
 def main():
 	parser = ArgumentParser(
@@ -13,7 +16,15 @@ def main():
 
 	logging.basicConfig(level=getattr(logging, parsed.log_level))
 
-	print("Hello, world!")
+	pygame.init()
+
+	app = App()
+
+	while (app.update()):
+		pass
+
+	app.quit()
+	pygame.quit()
 
 if __name__ == "__main__":
 	main()

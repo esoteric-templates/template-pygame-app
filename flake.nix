@@ -1,5 +1,5 @@
 {
-  description = "A template Python package";
+  description = "A template pygame application";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
@@ -19,6 +19,10 @@
 
         format = "pyproject";
 
+        propagatedBuildInputs = with pkgs.python3Packages; [
+          pygame-ce
+        ];
+
         nativeBuildInputs = with pkgs.python3Packages; [
           setuptools
           wheel
@@ -33,7 +37,7 @@
         '';
 
         meta = with pkgs.lib; {
-          description = "A template Python package";
+          description = "A template pygame application";
           license = licenses.agpl3Only;
         };
       };
@@ -43,6 +47,8 @@
           python3
           python3Packages.pip
           python3Packages.virtualenv
+
+          python3Packages.pygame-ce
         ];
 
         shellHook = ''
