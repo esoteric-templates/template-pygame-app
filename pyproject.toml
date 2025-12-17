@@ -16,6 +16,10 @@ authors = [
 dependencies = [
 ]
 
+[project.urls]
+"Source" = "https://gitlab.com/-/p/75750085"
+"Bug Reports" = "https://gitlab.com/esoteric-templates/templates/template-python-package/-/issues"
+
 # [project.scripts]
 # template = "template.__main__:main"
 
