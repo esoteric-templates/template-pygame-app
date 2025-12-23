@@ -2,7 +2,7 @@
   description = "A template pygame application";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -10,7 +10,7 @@
     flake-utils.lib.eachDefaultSystem (system:
     let
       pkgs = import nixpkgs { inherit system; };
-      revision = self.shortRev or self.dirtyRev or "unknown";
+      revision = self.shortRev or self.dirtyShortRev or "unknown";
     in {
       packages.default = pkgs.python3Packages.buildPythonPackage {
         pname = "template";
