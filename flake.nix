@@ -1,65 +1,46 @@
 {
-  description = "A template pygame application";
+	description = "Template pygame application";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-    flake-utils.url = "github:numtide/flake-utils";
-  };
+	inputs = {
+		nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+		flake-utils.url = "github:numtide/flake-utils";
+	};
 
-  outputs = { self, nixpkgs, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
-    let
-      pkgs = import nixpkgs { inherit system; };
-      revision = self.shortRev or self.dirtyShortRev or "unknown";
-    in {
-      packages.default = pkgs.python3Packages.buildPythonPackage {
-        pname = "template";
-        version = revision;
-        src = ./.;
+	outputs = { self, nixpkgs, flake-utils, ... }:
+		flake-utils.lib.eachDefaultSystem (system:
+		let
+			pname = "template";
+			pkgs = import nixpkgs { inherit system; };
+		in {
+			packages.default = pkgs.python3Packages.buildPythonPackage {
+				inherit pname;
 
-        format = "pyproject";
+				version = pkgs.lib.removeSuffix "\n" "${builtins.readFile ./${pname}/assets/version.txt}";
+				src = ./.;
 
-        propagatedBuildInputs = with pkgs.python3Packages; [
-          pygame-ce
-        ];
+				format = "pyproject";
 
-        nativeBuildInputs = with pkgs.python3Packages; [
-          setuptools
-          wheel
-        ];
+				nativeBuildInputs = with pkgs.python3Packages; [
+					setuptools
+					wheel
+				];
 
-        checkInputs = with pkgs.python3Packages; [
-          pytest
-        ];
+				propagatedBuildInputs = with pkgs.python3Packages; [
+					pygame-ce
+				];
 
-        checkPhase = ''
-          ${pkgs.python3Packages.pytest}/bin/pytest
-        '';
+				checkInputs = with pkgs.python3Packages; [
+					pytestCheckHook
+				];
 
-        meta = with pkgs.lib; {
-          description = "A template pygame application";
-          license = licenses.agpl3Only;
-        };
-      };
+				meta = with pkgs.lib; {
+					description = "Template pygame application";
+					license = licenses.agpl3Only;
+				};
+			};
 
-      devShells.default = pkgs.mkShell {
-        buildInputs = with pkgs; [
-          python3
-          python3Packages.pip
-          python3Packages.virtualenv
-
-          python3Packages.pygame-ce
-        ];
-
-        shellHook = ''
-          rm -rf .venv/
-          python -m venv .venv/
-
-          source .venv/bin/activate
-
-          pip install -r requirements.txt
-          pip install -r requirements-dev.txt
-        '';
-      };
-    });
+			devShells.default = pkgs.mkShell {
+				inputsFrom = [ self.packages.${system}.default ];
+			};
+		});
 }

@@ -1,19 +1,12 @@
-[build-system]
-requires = ["setuptools", "wheel"]
-
 [project]
-name = "template"
-version = "0.1.0"
-description = "A template pygame application"
-readme = "README.md"
-requires-python = ">=3.12"
-license = "AGPL-3.0-only"
-license-files = ["LICENSE"]
-authors = [
-  { name = "Author", email = "author@example.org" },
-]
+dynamic = ["version"]
 
-dependencies = [
+name = "template"
+description = "Template pygame application"
+readme = "README.md"
+license = "AGPL-3.0-only"
+authors = [
+	{ name = "Author", email = "author@example.org" },
 ]
 
 [project.urls]
@@ -23,13 +16,8 @@ dependencies = [
 [project.scripts]
 template = "template.__main__:main"
 
-[tool.setuptools]
-packages = { find = { include = ["template*"] } }
-include-package-data = true
+[tool.setuptools.dynamic]
+version = { attr = "template.__version__" }
 
 [tool.setuptools.package-data]
 "template" = ["assets/**/*"]
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-pythonpath = ["."]
