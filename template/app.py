@@ -14,9 +14,19 @@ class App():
 		pygame.display.set_icon(pygame.image.load_sized_svg(f"{self.path}/assets/images/logo.svg", (512, 512)))
 
 	def update(self) -> bool:
+		keys = pygame.key.get_pressed()
+
+		if keys[pygame.K_ESCAPE]:
+			return False
+
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				return False
+
+		if keys[pygame.K_F11]:
+			flags = self.screen.get_flags()
+			is_fullscreen = flags & FULLSCREEN != 0
+			self.screen = pygame.display.set_mode(self.screen.size, flags | FULLSCREEN if not is_fullscreen else flags & ~FULLSCREEN)
 
 		self.screen.fill("black")
 
