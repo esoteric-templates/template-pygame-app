@@ -14,7 +14,7 @@ class App():
 		pygame.display.set_icon(pygame.image.load_sized_svg(f"{self.path}/assets/images/logo.svg", (512, 512)))
 
 	def update(self) -> bool:
-		keys = pygame.key.get_pressed()
+		keys = pygame.key.get_just_pressed()
 
 		if keys[pygame.K_ESCAPE]:
 			return False
