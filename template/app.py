@@ -25,8 +25,8 @@ class App():
 
 		if keys[pygame.K_F11]:
 			flags = self.screen.get_flags()
-			is_fullscreen = flags & FULLSCREEN != 0
-			self.screen = pygame.display.set_mode(self.screen.size, RESIZABLE | FULLSCREEN if not is_fullscreen else RESIZABLE)
+			was_fullscreen = flags & FULLSCREEN != 0
+			self.screen = pygame.display.set_mode(self.screen.size, RESIZABLE | FULLSCREEN if not was_fullscreen else RESIZABLE)
 
 		self.screen.fill("black")
 
